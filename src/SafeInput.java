@@ -123,7 +123,7 @@ public class SafeInput {
      * Get user response to a yes or no question
      * @param pipe a Scanner opened to read from System.in
      * @param prompt prompt for the user
-     * @return a boolean value (true for 'Y', false for 'N'
+     * @return a boolean value (true for 'Y', false for 'N')
      */
     public static boolean getYNConfirm(Scanner pipe, String prompt) {
         boolean done = false;
@@ -142,13 +142,20 @@ public class SafeInput {
         return response;
     }
 
-    public static String getRegExString(Scanner pipe, String prompt, String rexEx) {
+    /**
+     * Validate user input with provided RegEx string
+     * @param pipe a Scanner opened to read from System.in
+     * @param prompt prompt for the user
+     * @param regEx RegEx string
+     * @return The validated user input string
+     */
+    public static String getRegExString(Scanner pipe, String prompt, String regEx) {
         boolean done = false;
         String response = "";
 
         do {
             System.out.print(prompt + ": ");
-            if (pipe.hasNext(rexEx)) {
+            if (pipe.hasNext(regEx)) {
                 response = pipe.nextLine();
                 done = true;
             } else {
@@ -158,5 +165,54 @@ public class SafeInput {
 
         return response;
     }
-}
 
+    /**
+     * Print a message into a formatted header
+     * @param msg the message included in the header
+     */
+    public static void prettyHeader(String msg) {
+        int TOTAL_WIDTH = 60;
+        int CENTER_STAR_COUNT = 3;
+        int msgLength = msg.length();
+        int whitespace = (TOTAL_WIDTH - msgLength) / 2 - CENTER_STAR_COUNT;
+
+        if (whitespace < 1) {
+            whitespace = 1;
+        }
+
+        for (int i = 0; i < TOTAL_WIDTH; i++) {
+            System.out.print("*");
+        }
+        System.out.println();
+
+        for (int i = 0; i < CENTER_STAR_COUNT; i++) {
+            System.out.print("*");
+        }
+
+        for (int i = 0; i < whitespace; i++) {
+            System.out.print(" ");
+        }
+
+        System.out.print(msg);
+
+        if (msgLength % 2 == 1) {
+            System.out.print(" ");
+        }
+
+        for (int i = 0; i < whitespace; i++) {
+            System.out.print(" ");
+        }
+
+        for (int i = 0; i < CENTER_STAR_COUNT; i++) {
+            System.out.print("*");
+        }
+
+        System.out.println();
+
+        for (int i = 0; i < TOTAL_WIDTH; i++) {
+            System.out.print("*");
+        }
+
+        System.out.println();
+    }
+}
